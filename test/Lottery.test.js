@@ -85,6 +85,49 @@ describe('Lottery Contract', () => {
 
     })
 
+    //Test the Pick Winner()
+    it('Only Manager Selects Winner', async () => {
+        try{
+            await lottery.methods.pickWinner().send({
+                from: accounts[1],
+            })
+            assert(false)
+        }
+        catch (err){
+            assert(err)
+        }
+    })
+
+    //Overal Test that does it all at once
+    it('Sends Money to Winner & Resets', async () => {
+        try{
+            await lottery.methods.enter().send({
+                from : accounts[0],
+                value : web3.utils.toWei('2','ether')
+            })
+
+            const initBal = await web3.eth.getBalance(accounts[0]) //Returns value of the ether
+
+            await lottery.methods.pickWinner().send({
+                from: accounts[0]
+            })
+
+            const finalBal = await web3.eth.getBalance(accounts[0])
+
+            const dif = finalBal - initBal
+            //console.log(finalBal - initBal)
+            assert(dif > web3.utils.toWei('1.8', 'ether')
+                
+            )
+
+        }
+        catch(error){
+            assert(error)
+        }
+
+
+    })
+
    
 })
 
