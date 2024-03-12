@@ -67,6 +67,21 @@ describe('Lottery Contract', () => {
         assert.equal(accounts[1], players[1])
         assert.equal(accounts[2], players[2])
 
+    })
+
+    //Verify that the user enters the correct ammount
+    it ('Minimum Amount to of Ether', async () => {
+        try{
+            await lottery.methods.enter().send({
+                from: accounts[0],
+                value : 0
+            })
+            //Make this test fail
+            assert(false)
+        }
+        catch (error) {
+            assert(error)
+        }
 
     })
 
